@@ -1,4 +1,5 @@
 ﻿using Application.Features.Productos.Commands.AddProducto;
+using Application.Features.Productos.Queries.GetProducto;
 using Application.Features.Productos.Queries.GetProductos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,17 @@ namespace minishop3d_api.Controllers
         public ProductoController(ISender sender)
         {
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        }
+
+        //[Authorize]
+        [HttpGet("{productoId:int:required}")]
+        public async Task<IActionResult> GetProductoAsync(
+            [FromRoute] int productoId,
+            CancellationToken cancellationToken
+            )
+        {
+            var result = await _sender.Send(new GetProductoQuery(productoId), cancellationToken);
+            return HandleResult(result);
         }
 
         [Authorize]

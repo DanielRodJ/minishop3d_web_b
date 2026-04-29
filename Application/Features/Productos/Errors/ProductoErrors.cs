@@ -4,6 +4,12 @@ namespace Application.Features.Productos.Errors
 {
     public static class ProductoErrors
     {
+        public static Error NotFound(int id) =>
+            Error.NotFound("Producto.NotFound", $"No se encontró el producto con ID {id}.");
+
+        public static Error Deleted(int id) =>
+            Error.NotFound("Producto.Deleted", $"El producto con ID {id} ha sido eliminado.");
+
         public static Error ColeccionNotFound(int id) =>
             Error.NotFound("Producto.ColeccionNotFound", $"No se encontró la colección con ID {id}.");
 

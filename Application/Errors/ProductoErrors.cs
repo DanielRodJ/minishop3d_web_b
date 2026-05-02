@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Application.Features.Productos.Errors
+namespace Application.Errors
 {
     public static class ProductoErrors
     {

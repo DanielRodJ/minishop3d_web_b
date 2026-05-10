@@ -1,5 +1,6 @@
 ﻿using Application.Features.Catalogos.Queries.GetEscalas;
 using Application.Features.Catalogos.Queries.GetEstadosProducto;
+using Application.Features.Catalogos.Queries.GetEstadosPublicacion;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,13 @@ namespace minishop3d_api.Controllers
         public async Task<IActionResult> GetEstadosProducto(CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new GetEstadosProductoQuery(), cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpGet("estados-publicacion")]
+        public async Task<IActionResult> GetEstadosPublicacion(CancellationToken cancellationToken)
+        {
+            var result = await _sender.Send(new GetEstadosPublicacionQuery(), cancellationToken);
             return Ok(result);
         }
     }

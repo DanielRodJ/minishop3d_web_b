@@ -1,8 +1,5 @@
-﻿using Application.Features.Catalogos.Queries.GetAcabadosMaterial;
-using Application.Features.Catalogos.Queries.GetColoresFilamento;
-using Application.Features.Catalogos.Queries.GetEscalas;
+﻿using Application.Features.Catalogos.Queries.GetEscalas;
 using Application.Features.Catalogos.Queries.GetEstadosProducto;
-using Application.Features.Catalogos.Queries.GetTiposInsumo;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,20 +16,6 @@ namespace minishop3d_api.Controllers
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
-        [HttpGet("acabados-material")]
-        public async Task<IActionResult> GetAcabadosMaterial(CancellationToken cancellationToken)
-        {
-            var result = await _sender.Send(new GetAcabadosMaterialQuery(), cancellationToken);
-            return Ok(result);
-        }
-
-        [HttpGet("colores-filamento")]
-        public async Task<IActionResult> GetColoresFilamento(CancellationToken cancellationToken)
-        {
-            var result = await _sender.Send(new GetColoresFilamentoQuery(), cancellationToken);
-            return Ok(result);
-        }
-
         [HttpGet("escalas")]
         public async Task<IActionResult> GetEscalas(CancellationToken cancellationToken)
         {
@@ -44,13 +27,6 @@ namespace minishop3d_api.Controllers
         public async Task<IActionResult> GetEstadosProducto(CancellationToken cancellationToken)
         {
             var result = await _sender.Send(new GetEstadosProductoQuery(), cancellationToken);
-            return Ok(result);
-        }
-
-        [HttpGet("tipos-insumo")]
-        public async Task<IActionResult> Login(CancellationToken cancellationToken)
-        {
-            var result = await _sender.Send(new GetTiposInsumoQuery(), cancellationToken);
             return Ok(result);
         }
     }

@@ -1,9 +1,10 @@
-﻿using Application.Features.Productos.Dtos;
-using Application.Features.Productos.Errors;
+﻿using Application.Errors;
+using Application.Features.Productos.Dtos;
 using Domain.Common;
 using Domain.Interfaces;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Productos.Queries.GetProducto
@@ -27,7 +28,11 @@ namespace Application.Features.Productos.Queries.GetProducto
         {
             _logger.LogDebug("Iniciando obtención de producto con ID {}", request.ProductoId);
 
-            var producto = await _productoRepository.GetByIdAsync(request.ProductoId, cancellationToken);
+            var producto = await _productoRepository
+                .QueryAsNoTracking()
+                .Where(p => p.ProductoId == request.ProductoId)
+                .Include(p => p.ProductoPresentaciones)
+                .FirstOrDefaultAsync(cancellationToken);
 
             if (producto is null)
                 return Result.Failure<ProductoDetalladoDto>(ProductoErrors.NotFound(request.ProductoId));

@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Productos;
+﻿using Application.Features.ProductoPresentaciones.Dtos;
+using Domain.Entities.Productos;
 using Mapster;
 
 namespace Application.Features.Productos.Dtos
@@ -9,11 +10,9 @@ namespace Application.Features.Productos.Dtos
         public int? ColeccionId { get; set; }
         public string NombreProducto { get; set; } = string.Empty;
         public string DescripcionProducto { get; set; } = string.Empty;
-        public string EscalaBase { get; set; } = string.Empty;
-        public string CostoProduccionBase { get; set; } = string.Empty;
-        public string FilamentoUsoBase { get; set; } = string.Empty;
         public string? AutorNombre { get; set; } = string.Empty;
         public DateOnly FechaLanzamiento { get; set; }
+        public List<ProductoPresentacionDto>? ProductoPresentaciones { get; set; }
         public bool IsDeleted { get; set; }
     }
 
@@ -25,11 +24,9 @@ namespace Application.Features.Productos.Dtos
                 .Map(dest => dest.ProductoId, src => src.ProductoId)
                 .Map(dest => dest.NombreProducto, src => src.Nombre)
                 .Map(dest => dest.DescripcionProducto, src => src.Descripcion)
-                .Map(dest => dest.EscalaBase, src => src.EscalaBase)
-                .Map(dest => dest.CostoProduccionBase, src => src.CostoProduccionBase)
-                .Map(dest => dest.FilamentoUsoBase, src => src.FilamentoUsoBase)
                 .Map(dest => dest.AutorNombre, src => src.AutorNombre)
-                .Map(dest => dest.FechaLanzamiento, src => src.FechaLanzamiento);
+                .Map(dest => dest.FechaLanzamiento, src => src.FechaLanzamiento)
+                .Map(dest => dest.ProductoPresentaciones, src => src.ProductoPresentaciones);
         }
     }
 }

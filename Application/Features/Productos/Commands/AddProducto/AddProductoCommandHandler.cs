@@ -3,7 +3,7 @@ using Domain.Entities.Productos;
 using Domain.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Application.Features.Productos.Errors;
+using Application.Errors;
 
 namespace Application.Features.Productos.Commands.AddProducto
 {
@@ -31,9 +31,6 @@ namespace Application.Features.Productos.Commands.AddProducto
             {
                 Nombre = command.NombreProducto,
                 Descripcion = command.DescripcionProducto,
-                EscalaBase = command.EscalaBase,
-                CostoProduccionBase = command.CostoProduccionBase,
-                FilamentoUsoBase = command.FilamentoUsoBase,
                 AutorNombre = command.AutorNombre,
                 FechaLanzamiento = command.FechaLanzamiento
             };
@@ -53,7 +50,7 @@ namespace Application.Features.Productos.Commands.AddProducto
 
             await _productoRepository.AddAsync(nuevoProducto, cancellationToken);
 
-            return Result.Success<int>(nuevoProducto.ProductoId);
+            return Result.Success(nuevoProducto.ProductoId);
         }
     }
 }

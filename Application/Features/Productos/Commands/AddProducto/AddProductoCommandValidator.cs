@@ -1,34 +1,30 @@
-﻿using FluentValidation;
+﻿using Application.Interfaces;
+using FluentValidation;
 
 namespace Application.Features.Productos.Commands.AddProducto
 {
     public class AddProductoCommandValidator : AbstractValidator<AddProductoCommand>
     {
-        public AddProductoCommandValidator()
+        public AddProductoCommandValidator(IDateTimeService dateTimeService)
         {
-            RuleFor(x => x.NombreProducto)
+            RuleFor(cmd => cmd.NombreProducto)
                 .NotEmpty().WithMessage("El nombre del producto es obligatorio.")
                 .MaximumLength(100).WithMessage("El nombre del producto no puede exceder los 100 caracteres.");
 
-            RuleFor(x => x.DescripcionProducto)
-                .NotEmpty().WithMessage("La descripción del producto es obligatoria.")
-                .MaximumLength(500).WithMessage("La descripción del producto no puede exceder los 500 caracteres.");
+            RuleFor(cmd => cmd.DescripcionProducto)
+                .NotEmpty().WithMessage("La descripción del producto es obligatoria.");
 
-            RuleFor(x => x.EscalaBase)
-                .NotEmpty().WithMessage("La escala base es obligatoria.")
-                .MaximumLength(50).WithMessage("La escala base no puede exceder los 50 caracteres.");
-
-            RuleFor(x => x.CostoProduccionBase)
-                .GreaterThan(0).WithMessage("El costo de producción base debe ser mayor que cero.");
-
-            RuleFor(x => x.FilamentoUsoBase)
-                .GreaterThan(0).WithMessage("El filamento de uso base debe ser mayor que cero.");
-
-            RuleFor(x => x.AutorNombre)
+            RuleFor(cmd => cmd.AutorNombre)
                 .MaximumLength(100).WithMessage("El nombre del autor no puede exceder los 100 caracteres.");
 
-            RuleFor(x => x.FechaLanzamiento)
-                .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today)).WithMessage("La fecha de lanzamiento no puede ser futura.");
+            RuleFor(cmd => cmd.FechaLanzamiento)
+                .LessThanOrEqualTo(dateTimeService.Today)
+                .WithMessage("La fecha de lanzamiento no puede ser futura.");
+
+            RuleFor(cmd => cmd.ColeccionId)
+                .GreaterThan(0)
+                .When(cmd => cmd.ColeccionId.HasValue)
+                .WithMessage("La colección debe ser mayor que 0.");
         }
     }
 }

@@ -30,18 +30,6 @@ namespace Infraestructure.Persistence.Configurations
                 .HasColumnName("descripcion")
                 .IsRequired();
 
-            builder.Property(p => p.EscalaBase)
-                .HasColumnName("escala_base")
-                .IsRequired();
-
-            builder.Property(p => p.CostoProduccionBase)
-                .HasColumnName("costo_produccion_base")
-                .IsRequired();
-
-            builder.Property(p => p.FilamentoUsoBase)
-                .HasColumnName("filamento_uso_base")
-                .IsRequired();
-
             builder.Property(p => p.AutorNombre)
                 .HasColumnName("autor_nombre");
 

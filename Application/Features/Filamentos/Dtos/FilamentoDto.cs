@@ -20,6 +20,7 @@ namespace Application.Features.Filamentos.Dtos
         {
             config.NewConfig<Filamento, FilamentoDto>()
                 .Map(dest => dest.FilamentoId, src => src.FilamentoId)
+                .Map(dest => dest.Display, src => $"{src.Nombre} - {src.TipoMaterial} - {src.Color} {src.Acabado}")
                 .Map(dest => dest.Codigo, src => src.Codigo)
                 .Map(dest => dest.TipoMaterial, src => src.TipoMaterial)
                 .Map(dest => dest.Color, src => src.Color)

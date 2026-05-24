@@ -1,5 +1,6 @@
 ﻿using Application.Features.Filamentos.Dtos;
 using Domain.Interfaces;
+using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -28,15 +29,7 @@ namespace Application.Features.Filamentos.Queries.GetListaFilamentos
                 .OrderBy(x => x.Nombre)
                 .ThenBy(x => x.TipoMaterial)
                 .ThenBy(x => x.Color)
-                .Select(x => new FilamentoDto
-                {
-                    FilamentoId = x.FilamentoId,
-                    Display = $"{x.Nombre} - {x.TipoMaterial} - {x.Color} {x.Acabado}",
-                    Codigo = x.Codigo,
-                    TipoMaterial = x.TipoMaterial,
-                    Color = x.Color,
-                    Acabado = x.Acabado
-                })
+                .ProjectToType<FilamentoDto>()
                 .ToListAsync(cancellationToken);
         }
     }

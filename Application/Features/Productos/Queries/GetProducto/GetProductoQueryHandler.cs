@@ -32,6 +32,7 @@ namespace Application.Features.Productos.Queries.GetProducto
                 .QueryAsNoTracking()
                 .Where(p => p.ProductoId == request.ProductoId)
                 .Include(p => p.ProductoPresentaciones)
+                .ThenInclude(pp => pp.Filamento)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (producto is null)

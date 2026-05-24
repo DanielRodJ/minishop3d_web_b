@@ -13,6 +13,6 @@ namespace Domain.Entities.Productos
         public DateOnly FechaLanzamiento { get; set; }
         public int? ColeccionId { get; set; }
         public virtual Coleccion? Coleccion { get; set; }
-        public virtual ICollection<ProductoPresentacion>? ProductoPresentaciones { get; set; } = new List<ProductoPresentacion>();
+        public virtual ICollection<ProductoPresentacion> ProductoPresentaciones { get; set; } = [];
     }
 }

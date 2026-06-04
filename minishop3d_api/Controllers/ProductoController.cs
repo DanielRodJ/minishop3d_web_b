@@ -1,6 +1,10 @@
 ﻿using Application.Features.Productos.Commands.AddProducto;
+using Application.Features.Productos.Commands.UpdateProducto;
+using Application.Features.Productos.Queries.GetCantidadPresentaciones;
 using Application.Features.Productos.Queries.GetProducto;
+using Application.Features.Productos.Queries.GetProductoPresentaciones;
 using Application.Features.Productos.Queries.GetProductos;
+using Application.Features.Productos.Queries.GetProductosDetallados;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +40,25 @@ namespace minishop3d_api.Controllers
             )
         {
             var result = await _sender.Send(command, cancellationToken);
+            return HandleResult(result);
+        }
+
+        [Authorize]
+        [HttpPut("{productoId:int:required}")]
+
+        public async Task<IActionResult> UpdateProductoAsync(
+            [FromRoute] int productoId,
+            [FromBody] UpdateProductoCommand command,
+            CancellationToken cancellationToken
+            )
+        {
+            if (productoId != command.ProductoId)
+            {
+                command.ProductoId = productoId;
+            }
+
+            var result = await _sender.Send(command, cancellationToken);
+
             return HandleResult(result);
         }
 

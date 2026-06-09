@@ -11,6 +11,10 @@ namespace Infraestructure.Persistence.Configurations
         {
             builder.ToTable("publicacion")
                 .HasKey(p => p.PublicacionId);
+
+            builder.HasOne(p => p.Producto)
+                .WithOne(p => p.Publicacion)
+                .HasForeignKey<Publicacion>(p => p.ProductoId);
         }
 
         protected override void ConfigureColumns(EntityTypeBuilder<Publicacion> builder)

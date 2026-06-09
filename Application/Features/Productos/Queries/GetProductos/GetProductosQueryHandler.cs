@@ -10,8 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Productos.Queries.GetProductos
 {
-    public class GetProductosQueryHandler
-        : IRequestHandler<GetProductosQuery, Result<BasePagedDto<ProductoBaseDto>>>
+    public class GetProductosQueryHandler : IRequestHandler<GetProductosQuery, Result<BasePagedDto<ProductoBaseDto>>>
     {
         private readonly IProductoRepository _productoRepository;
         private readonly ILogger<GetProductosQueryHandler> _logger;
@@ -24,22 +23,20 @@ namespace Application.Features.Productos.Queries.GetProductos
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Result<BasePagedDto<ProductoBaseDto>>> Handle(
-            GetProductosQuery request,
-            CancellationToken cancellationToken)
+        public async Task<Result<BasePagedDto<ProductoBaseDto>>> Handle(GetProductosQuery request, CancellationToken cancellationToken)
         {
             _logger.LogDebug("Iniciando obtención de productos.");
 
             var filters = FilterEncoder.Decode<GetProductosFilters>(request.Filters);
 
-            var query = _productoRepository
+            var productoQuery = _productoRepository
                 .QueryAsNoTracking()
                 .Where(p => !p.IsDeleted);
 
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
             {
                 var term = request.SearchTerm.ToLower();
-                query = query.Where(p =>
+                productoQuery = productoQuery.Where(p =>
                     p.Nombre.ToLower().Contains(term) ||
                     p.AutorNombre.ToLower().Contains(term));
             }
@@ -47,38 +44,38 @@ namespace Application.Features.Productos.Queries.GetProductos
             if (filters is not null)
             {
                 if (filters.ColeccionId.HasValue)
-                    query = query.Where(p => p.ColeccionId == filters.ColeccionId.Value);
+                    productoQuery = productoQuery.Where(p => p.ColeccionId == filters.ColeccionId.Value);
 
                 if (filters.IsDeleted.HasValue)
-                    query = query.Where(p => p.IsDeleted == filters.IsDeleted.Value);
+                    productoQuery = productoQuery.Where(p => p.IsDeleted == filters.IsDeleted.Value);
             }
 
-            query = request.SortBy?.ToLower() switch
+            productoQuery = request.SortBy?.ToLower() switch
             {
                 "nombre" => request.SortDescending
-                    ? query.OrderByDescending(p => p.Nombre)
-                    : query.OrderBy(p => p.Nombre),
+                    ? productoQuery.OrderByDescending(p => p.Nombre)
+                    : productoQuery.OrderBy(p => p.Nombre),
 
                 "fecha" => request.SortDescending
-                    ? query.OrderByDescending(p => p.FechaLanzamiento)
-                    : query.OrderBy(p => p.FechaLanzamiento),
+                    ? productoQuery.OrderByDescending(p => p.FechaLanzamiento)
+                    : productoQuery.OrderBy(p => p.FechaLanzamiento),
 
                 "autor" => request.SortDescending
-                    ? query.OrderByDescending(p => p.AutorNombre)
-                    : query.OrderBy(p => p.AutorNombre),
+                    ? productoQuery.OrderByDescending(p => p.AutorNombre)
+                    : productoQuery.OrderBy(p => p.AutorNombre),
 
-                _ => query.OrderByDescending(p => p.ProductoId)
+                _ => productoQuery.OrderByDescending(p => p.ProductoId)
             };
 
-            var totalItems = await query.CountAsync(cancellationToken);
+            var totalItems = await productoQuery.CountAsync(cancellationToken);
 
             if (request.Skip.HasValue)
-                query = query.Skip(request.Skip.Value);
+                productoQuery = productoQuery.Skip(request.Skip.Value);
 
             if (request.Take.HasValue)
-                query = query.Take(request.Take.Value);
+                productoQuery = productoQuery.Take(request.Take.Value);
 
-            var items = await query
+            var items = await productoQuery
                 .ProjectToType<ProductoBaseDto>()
                 .ToListAsync(cancellationToken);
 

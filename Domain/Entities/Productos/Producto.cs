@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities.Publicaciones;
 
 namespace Domain.Entities.Productos
 {
@@ -7,12 +8,13 @@ namespace Domain.Entities.Productos
         public Producto() { }
 
         public int ProductoId { get; set; }
+        public int? ColeccionId { get; set; }
+        public virtual Coleccion? Coleccion { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public string? AutorNombre { get; set; } = string.Empty;
         public DateOnly FechaLanzamiento { get; set; }
-        public int? ColeccionId { get; set; }
-        public virtual Coleccion? Coleccion { get; set; }
+        public virtual Publicacion? Publicacion { get; set; }
         public virtual ICollection<ProductoPresentacion> ProductoPresentaciones { get; set; } = [];
     }
 }

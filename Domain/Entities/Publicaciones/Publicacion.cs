@@ -1,5 +1,5 @@
-﻿
-using Domain.Common;
+﻿using Domain.Common;
+using Domain.Entities.Productos;
 
 namespace Domain.Entities.Publicaciones
 {
@@ -9,6 +9,7 @@ namespace Domain.Entities.Publicaciones
 
         public long PublicacionId { get; set; }
         public int ProductoId { get; set; }
+        public virtual Producto? Producto { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public string EstadoPublicacionCodigo { get; set; } = string.Empty;

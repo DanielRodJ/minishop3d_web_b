@@ -15,5 +15,8 @@ namespace Application.Errors
 
         public static Error ColeccionNotFound(int id) =>
             Error.NotFound("Producto.ColeccionNotFound", $"No se encontró la colección con ID {id}.");
+
+        public static Error PublicacionNotFound(int id) =>
+            Error.NotFound("Producto.PublicacionNotFound", $"No se encontró ninguna publicación asociada al producto {id}");
     }
 }

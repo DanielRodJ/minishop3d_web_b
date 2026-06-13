@@ -2,7 +2,7 @@
 using Domain.Common;
 using MediatR;
 
-namespace Application.Features.Publicaciones.UpdatePublicacionEstado
+namespace Application.Features.Publicaciones.Commands.UpdatePublicacionEstado
 {
     public class UpdatePublicacionEstadoCommand : IRequest<Result<ProductoBaseDto>>
     {

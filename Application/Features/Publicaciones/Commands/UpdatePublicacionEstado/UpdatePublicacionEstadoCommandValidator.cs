@@ -1,7 +1,7 @@
 ﻿using Domain.Enums;
 using FluentValidation;
 
-namespace Application.Features.Publicaciones.UpdatePublicacionEstado
+namespace Application.Features.Publicaciones.Commands.UpdatePublicacionEstado
 {
     public class UpdatePublicacionEstadoCommandValidator : AbstractValidator<UpdatePublicacionEstadoCommand>
     {

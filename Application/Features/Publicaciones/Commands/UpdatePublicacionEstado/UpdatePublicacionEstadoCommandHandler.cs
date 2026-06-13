@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Publicaciones.UpdatePublicacionEstado
+namespace Application.Features.Publicaciones.Commands.UpdatePublicacionEstado
 {
     public class UpdatePublicacionEstadoCommandHandler : IRequestHandler<UpdatePublicacionEstadoCommand, Result<ProductoBaseDto>>
     {

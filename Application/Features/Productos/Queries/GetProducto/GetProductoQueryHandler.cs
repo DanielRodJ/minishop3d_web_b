@@ -33,6 +33,7 @@ namespace Application.Features.Productos.Queries.GetProducto
                 .Where(p => p.ProductoId == request.ProductoId)
                 .Include(p => p.ProductoPresentaciones)
                 .ThenInclude(pp => pp.Filamento)
+                .Include(p => p.Publicacion)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (producto is null)

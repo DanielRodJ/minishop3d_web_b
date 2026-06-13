@@ -6,6 +6,7 @@ namespace Application.Features.Productos.Dtos
     public class ProductoBaseDto
     {
         public int ProductoId { get; set; }
+        public long? PublicacionId { get; set; }
         public int? ColeccionId { get; set; }
         public string NombreProducto { get; set; } = string.Empty;
         public string? AutorNombre { get; set; } = string.Empty;
@@ -23,7 +24,8 @@ namespace Application.Features.Productos.Dtos
                 .Map(dest => dest.NombreProducto, src => src.Nombre)
                 .Map(dest => dest.AutorNombre, src => src.AutorNombre)
                 .Map(dest => dest.FechaLanzamiento, src => src.FechaLanzamiento)
-                .Map(dest => dest.EstadoPublicacionCodigo, src => src.Publicacion == null ? null : src.Publicacion.EstadoPublicacionCodigo);
+                .Map(dest => dest.EstadoPublicacionCodigo, src => src.Publicacion == null ? null : src.Publicacion.EstadoPublicacionCodigo)
+                .Map(dest => dest.PublicacionId, src => src.Publicacion == null ? (long?)null : src.Publicacion.PublicacionId);
         }
     }
 }

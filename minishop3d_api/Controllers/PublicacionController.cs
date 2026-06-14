@@ -1,5 +1,6 @@
 ﻿using Application.Features.Publicaciones.Commands.AddPublicacion;
-using Application.Features.Publicaciones.UpdatePublicacionEstado;
+using Application.Features.Publicaciones.Commands.UpdatePublicacionEstado;
+using Application.Features.Publicaciones.Queries.GetPublicacion;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,17 @@ namespace minishop3d_api.Controllers
         public PublicacionController(ISender sender)
         {
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        }
+
+        [Authorize]
+        [HttpGet("{publicacionId:long:required}")]
+        public async Task<IActionResult> GetProductoAsync(
+            [FromRoute] long publicacionId,
+            CancellationToken cancellationToken
+            )
+        {
+            var result = await _sender.Send(new GetPublicacionQuery(publicacionId), cancellationToken);
+            return HandleResult(result);
         }
 
         [Authorize]
